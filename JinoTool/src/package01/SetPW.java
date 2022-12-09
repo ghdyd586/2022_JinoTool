@@ -22,11 +22,9 @@ public class SetPW extends JFrame {
 	int b1cnt;
 	int b2cnt;
 
-	SetPW(String password) {
+	SetPW() {
 		b1cnt = 0;
 		b2cnt = 0;
-
-		rememberpw(password);
 
 		setSize(400, 400);
 		setLocationRelativeTo(null);
@@ -62,9 +60,7 @@ public class SetPW extends JFrame {
 
 			public void mousePressed(MouseEvent e) {
 				if (b1cnt == 0) {
-					if (password == null) {
-						NewPW();
-					}
+					NewPW();
 				}
 
 			}
@@ -85,9 +81,7 @@ public class SetPW extends JFrame {
 
 			public void mousePressed(MouseEvent e) {
 				if (b2cnt == 0) {
-					if (password != null) {
-						ResetPW();
-					}
+					ResetPW();
 				}
 			}
 
@@ -106,7 +100,7 @@ public class SetPW extends JFrame {
 			}
 
 			public void mousePressed(MouseEvent e) {
-				new Settings(password);
+				new Settings(Main.readpw());
 				setVisible(false);
 			}
 
@@ -147,8 +141,8 @@ public class SetPW extends JFrame {
 				JOptionPane.showMessageDialog(notice, "Set Password Successfully!", "Notice",
 						JOptionPane.INFORMATION_MESSAGE);
 				password = new String(jf1.getPassword());
-				savepw(password);
-				new Login(password);
+				savepw("1" + password);
+				new Login(Main.readpw());
 				setVisible(false);
 			}
 		});
@@ -160,6 +154,7 @@ public class SetPW extends JFrame {
 		setVisible(true);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		b1cnt++;
+
 	}
 
 	public void ResetPW() {
@@ -176,12 +171,12 @@ public class SetPW extends JFrame {
 		JButton input = new JButton("Input");
 		input.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				if (new String(jf1.getPassword()).equals(password)) {
-					JOptionPane.showMessageDialog(notice, "Reset Password Successfully!", "Reset Password",
-							JOptionPane.INFORMATION_MESSAGE);
-					password = null;
-					savepw("");
-					new Settings(null);
+				if (new String(jf1.getPassword()).equals(Main.readpw())) {
+					JOptionPane.showMessageDialog(notice, "Reset Password Successfully!\n New password is 1234.",
+							"Reset Password", JOptionPane.INFORMATION_MESSAGE);
+					password = "1234";
+					savepw("1" + password);
+					new Settings(Main.readpw());
 					setVisible(false);
 				} else {
 					JOptionPane.showMessageDialog(notice, "Login Fail!", "Notice", JOptionPane.INFORMATION_MESSAGE);
@@ -195,6 +190,7 @@ public class SetPW extends JFrame {
 		setVisible(true);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		b2cnt++;
+
 	}
 
 	public void savepw(String password) {
@@ -205,10 +201,6 @@ public class SetPW extends JFrame {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-	}
-
-	public void rememberpw(String password) {
-		this.password = password;
 	}
 
 	public void visiblesetting(boolean n) {

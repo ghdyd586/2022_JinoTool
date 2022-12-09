@@ -54,7 +54,7 @@ public class Settings extends JFrame {
 			}
 
 			public void mousePressed(MouseEvent e) {
-				new SetPW(password);
+				new SetPW();
 				setVisible(false);
 			}
 

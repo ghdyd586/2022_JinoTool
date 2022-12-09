@@ -22,7 +22,6 @@ import javax.swing.JPanel;
 import javax.swing.JTextArea;
 
 public class Main extends JFrame {
-	private String password;
 
 	Main() {
 		setSize(400, 400);
@@ -131,7 +130,7 @@ public class Main extends JFrame {
 			}
 
 			public void mousePressed(MouseEvent e) {
-				new Settings(password);
+				new Settings(Main.readpw());
 				setVisible(false);
 			}
 
@@ -224,15 +223,11 @@ public class Main extends JFrame {
 		}
 	}
 
-	public void rememberpw(String password) {
-		this.password = password;
-	}
-
 	public void visiblesetting(boolean n) {
 		setVisible(n);
 	}
 
-	public static void main(String[] args) {
+	public static String readpw() {
 		String pw = "";
 		try {
 			File file = new File("etc/pw.txt");
@@ -250,10 +245,15 @@ public class Main extends JFrame {
 		} catch (IOException e) {
 			e.getStackTrace();
 		}
-		if (pw == "") {
+		return pw;
+	}
+
+	public static void main(String[] args) {
+
+		if (readpw() == "") {
 			new Main();
 		} else {
-			new Login(pw);
+			new Login(readpw());
 		}
 
 	}

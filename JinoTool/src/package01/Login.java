@@ -17,7 +17,7 @@ import javax.swing.JTextArea;
 public class Login extends JFrame {
 	Login(String password) {
 		Main m = new Main();
-		SetPW p = new SetPW(password);
+		SetPW p = new SetPW();
 		m.visiblesetting(false);
 		p.visiblesetting(false);
 		JFrame notice = new JFrame();
@@ -42,9 +42,8 @@ public class Login extends JFrame {
 		input.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if (new String(jf1.getPassword()).equals(password)) {
-					JOptionPane.showMessageDialog(notice, "Login Successfully!", "Notice",
-							JOptionPane.INFORMATION_MESSAGE);
-					m.rememberpw(password);
+					JOptionPane.showMessageDialog(notice, "Login Success!", "Notice", JOptionPane.INFORMATION_MESSAGE);
+
 					m.visiblesetting(true);
 					setVisible(false);
 				} else {

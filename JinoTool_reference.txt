@@ -1,0 +1,18 @@
+참고 사이트
+종료 팝업창 
+https://blog.naver.com/kkh0977/222301754363
+try..catch(예외처리)
+https://blog.naver.com/cjy2103/222876252761
+버튼 누를 때 창 전환
+https://dinae.tistory.com/27
+웹페이지 삽입
+https://blog.naver.com/doingnow33/222135958940
+패스워드 입력
+https://digiconfactory.tistory.com/85
+txt입출력
+https://wikidocs.net/227
+https://blog.naver.com/tmddhks2425/222791263915
+https://coding-factory.tistory.com/282
+https://studyingazae.tistory.com/16
+char<->string
+https://java119.tistory.com/106

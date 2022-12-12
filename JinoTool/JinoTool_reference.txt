@@ -16,3 +16,5 @@ https://coding-factory.tistory.com/282
 https://studyingazae.tistory.com/16
 char<->string
 https://java119.tistory.com/106
+int<->string
+https://hianna.tistory.com/524

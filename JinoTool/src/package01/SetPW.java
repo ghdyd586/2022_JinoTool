@@ -1,5 +1,8 @@
 package package01;
 
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Container;
 import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
@@ -7,7 +10,10 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.FileWriter;
+import java.io.IOException;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -19,25 +25,31 @@ import javax.swing.JTextArea;
 
 public class SetPW extends JFrame {
 	private String password;
-	int b1cnt;
-	int b2cnt;
+	int bcnt;
+	boolean isnew;
 
 	SetPW() {
-		b1cnt = 0;
-		b2cnt = 0;
-
+		Main m = new Main();
+		m.setVisible(false);
 		setSize(400, 400);
 		setLocationRelativeTo(null);
 		setResizable(false);
 		setVisible(true);
 		setTitle("Password Setting");
-		setLayout(new FlowLayout());
+		setBackground(Color.WHITE);
+		Container c = getContentPane();
+		c.setBackground(Color.WHITE);
+		JPanel p0 = new JPanel(new BorderLayout());
 		JPanel p1 = new JPanel(new FlowLayout());
 		JTextArea jta = new JTextArea("Set/Reset Password");
-
+		p0.setBackground(Color.WHITE);
+		p1.setBackground(Color.WHITE);
 		JButton b1 = new JButton("New Password");
 		JButton b2 = new JButton("Reset Password");
 		JButton b3 = new JButton("Back");
+		b1.setBackground(Color.WHITE);
+		b2.setBackground(Color.WHITE);
+		b3.setBackground(Color.WHITE);
 
 		try {
 			Font font = Font.createFont(Font.TRUETYPE_FONT, new File("Font/LINESeedSans_Bd.ttf"));
@@ -59,7 +71,7 @@ public class SetPW extends JFrame {
 			}
 
 			public void mousePressed(MouseEvent e) {
-				if (b1cnt == 0) {
+				if (readbcnt().equals("0")) {
 					NewPW();
 				}
 
@@ -80,7 +92,7 @@ public class SetPW extends JFrame {
 			}
 
 			public void mousePressed(MouseEvent e) {
-				if (b2cnt == 0) {
+				if (readbcnt().equals("1")) {
 					ResetPW();
 				}
 			}
@@ -111,7 +123,8 @@ public class SetPW extends JFrame {
 		p1.add(b1);
 		p1.add(b2);
 		p1.add(b3);
-		add(p1);
+		p0.add(p1);
+		add(p0, BorderLayout.NORTH);
 		setVisible(true);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	}
@@ -133,15 +146,20 @@ public class SetPW extends JFrame {
 		setLocationRelativeTo(null);
 		setResizable(false);
 		JPanel p2 = new JPanel();
+		p2.setBackground(Color.WHITE);
 		JLabel pw = new JLabel("New Password");
 		JPasswordField jf1 = new JPasswordField(10);
 		JButton input = new JButton("Input");
+		input.setBackground(Color.WHITE);
 		input.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				JOptionPane.showMessageDialog(notice, "Set Password Successfully!", "Notice",
 						JOptionPane.INFORMATION_MESSAGE);
 				password = new String(jf1.getPassword());
 				savepw("1" + password);
+				isnew = true;
+				savepwinfo(isnew);
+				savebcnt(1);
 				new Login(Main.readpw());
 				setVisible(false);
 			}
@@ -153,22 +171,25 @@ public class SetPW extends JFrame {
 		add(p2);
 		setVisible(true);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		b1cnt++;
 
 	}
 
 	public void ResetPW() {
 		JFrame notice = new JFrame();
+		setTitle("Password Setting");
 		notice.setTitle("Change Password Successfully!");
 		notice.setSize(300, 200);
 		notice.setLocationRelativeTo(null);
 		notice.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		notice.setResizable(false);
+		notice.setBackground(Color.WHITE);
 		notice.getContentPane().setLayout(null);
 		JLabel pw = new JLabel("Password");
 		JPanel p2 = new JPanel();
+		p2.setBackground(Color.WHITE);
 		JPasswordField jf1 = new JPasswordField(10);
 		JButton input = new JButton("Input");
+		input.setBackground(Color.WHITE);
 		input.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if (new String(jf1.getPassword()).equals(Main.readpw())) {
@@ -176,6 +197,9 @@ public class SetPW extends JFrame {
 							"Reset Password", JOptionPane.INFORMATION_MESSAGE);
 					password = "1234";
 					savepw("1" + password);
+					isnew = false;
+					savepwinfo(isnew);
+					savebcnt(0);
 					new Settings(Main.readpw());
 					setVisible(false);
 				} else {
@@ -189,14 +213,61 @@ public class SetPW extends JFrame {
 		add(p2);
 		setVisible(true);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		b2cnt++;
 
+	}
+
+	public static String readbcnt() {
+		String bcnt = "";
+		try {
+			File file = new File("etc/bcnt.txt");
+			FileReader file_reader = new FileReader(file);
+			file_reader.read();
+
+			int cur = 0;
+			while ((cur = file_reader.read()) != -1) {
+				String cc = String.valueOf((char) cur);
+				bcnt = bcnt + cc;
+			}
+		} catch (FileNotFoundException e) {
+			e.getStackTrace();
+		} catch (IOException e) {
+			e.getStackTrace();
+		}
+		return bcnt;
 	}
 
 	public void savepw(String password) {
 		try {
 			FileWriter fw = new FileWriter("etc/pw.txt");
 			fw.write(password);
+			fw.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	public void savepwinfo(Boolean isnew) {
+		try {
+			String info = "";
+			if (isnew == true) {
+				info = "1true";
+			} else {
+				info = "1false";
+			}
+			FileWriter fw = new FileWriter("etc/pwinfo.txt");
+			fw.write(info);
+			fw.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	public void savebcnt(int bcnt) {
+		try {
+			String sbcnt = "";
+			sbcnt = "1" + Integer.toString(bcnt);
+			FileWriter fw = new FileWriter("etc/bcnt.txt");
+			fw.write(sbcnt);
 			fw.close();
 		} catch (Exception e) {
 			e.printStackTrace();

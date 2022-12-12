@@ -23,6 +23,9 @@ public class ProgramInfo extends JFrame {
 		setLayout(new GridLayout(2, 0));
 		JPanel p1 = new JPanel(new FlowLayout());
 		JPanel p2 = new JPanel(new FlowLayout());
+		p1.setBackground(Color.WHITE);
+		p2.setBackground(Color.WHITE);
+
 		JTextArea jta1 = new JTextArea("About This Program");
 		JTextArea jta2 = new JTextArea("----Developer Info----\n" + "Name : Hoyong Jeong\n"
 				+ "School : Kookmin University,Seoul,Korea.Republic of.\n" + "Nationality : Korean\n"
@@ -35,6 +38,10 @@ public class ProgramInfo extends JFrame {
 		JButton b1 = new JButton("Previous Page");
 		JButton b2 = new JButton("I got it");
 		JButton b3 = new JButton("Next Page");
+		b1.setBackground(Color.WHITE);
+		b2.setBackground(Color.WHITE);
+		b3.setBackground(Color.WHITE);
+
 		b2.addMouseListener(new MouseListener() {
 			public void mouseEntered(MouseEvent e) {
 			}
@@ -78,11 +85,6 @@ public class ProgramInfo extends JFrame {
 		setVisible(true);
 		setLocationRelativeTo(null);
 		setResizable(false);
-	}
-
-	public static void main(String[] args) {
-		new ProgramInfo();
-
 	}
 
 }

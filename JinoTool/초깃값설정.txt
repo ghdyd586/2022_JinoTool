@@ -1,0 +1,4 @@
+각 파일 초깃값
+pw.txt = ""
+bcnt.txt = "10"
+pwinfo.txt = "false"

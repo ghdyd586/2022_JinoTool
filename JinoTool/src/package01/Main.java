@@ -49,6 +49,14 @@ public class Main extends JFrame {
 		JButton b6 = new JButton("Settings");
 		JButton b7 = new JButton("Exit");
 		JButton b8 = new JButton("Program Info");
+		b1.setBackground(Color.WHITE);
+		b2.setBackground(Color.WHITE);
+		b3.setBackground(Color.WHITE);
+		b4.setBackground(Color.WHITE);
+		b5.setBackground(Color.WHITE);
+		b6.setBackground(Color.WHITE);
+		b7.setBackground(Color.WHITE);
+		b8.setBackground(Color.WHITE);
 
 		JFrame exitframe = new JFrame();
 		exitframe.setSize(200, 200);
@@ -151,6 +159,8 @@ public class Main extends JFrame {
 			public void mousePressed(MouseEvent e) {
 				int quit = JOptionPane.showConfirmDialog(exitframe, exitmessage, "EXIT", JOptionPane.YES_NO_OPTION);
 				if (quit == 0) {
+					SetPW p = new SetPW();
+					p.savepwinfo(true);
 					System.exit(0);
 				} else if (quit == 1) {
 					// nothing happens.
@@ -238,7 +248,6 @@ public class Main extends JFrame {
 			while ((cur = file_reader.read()) != -1) {
 				String cc = String.valueOf((char) cur);
 				pw = pw + cc;
-				System.out.println(pw);
 			}
 		} catch (FileNotFoundException e) {
 			e.getStackTrace();
@@ -248,12 +257,36 @@ public class Main extends JFrame {
 		return pw;
 	}
 
+	public static String readpwinfo() {
+		String info = "";
+		try {
+			File file = new File("etc/pwinfo.txt");
+			FileReader file_reader = new FileReader(file);
+			file_reader.read();
+
+			int cur = 0;
+			while ((cur = file_reader.read()) != -1) {
+				String cc = String.valueOf((char) cur);
+				info = info + cc;
+			}
+		} catch (FileNotFoundException e) {
+			e.getStackTrace();
+		} catch (IOException e) {
+			e.getStackTrace();
+		}
+		return info;
+	}
+
 	public static void main(String[] args) {
 
-		if (readpw() == "") {
+		if (readpw().equals("")) {
 			new Main();
 		} else {
-			new Login(readpw());
+			if (readpwinfo().equals("true")) {
+				new Login(readpw());
+			} else {
+				new Main();
+			}
 		}
 
 	}

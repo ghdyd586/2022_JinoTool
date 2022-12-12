@@ -1,5 +1,6 @@
 package package01;
 
+import java.awt.Color;
 import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
@@ -15,6 +16,7 @@ import javax.swing.JPasswordField;
 import javax.swing.JTextArea;
 
 public class Login extends JFrame {
+
 	Login(String password) {
 		Main m = new Main();
 		SetPW p = new SetPW();
@@ -22,7 +24,9 @@ public class Login extends JFrame {
 		p.visiblesetting(false);
 		JFrame notice = new JFrame();
 		JPanel p0 = new JPanel(new GridLayout(3, 0));
-		JTextArea jta = new JTextArea("Login");
+		p0.setBackground(Color.WHITE);
+		JTextArea jta = new JTextArea("Login to Access");
+		jta.setEditable(false);
 		setTitle("Login");
 		notice.setTitle("Login Successfully!");
 		notice.setSize(300, 200);
@@ -35,15 +39,19 @@ public class Login extends JFrame {
 		setResizable(false);
 		JPanel p1 = new JPanel();
 		JPanel p2 = new JPanel();
-		JLabel pw = new JLabel("Login");
+		p1.setBackground(Color.WHITE);
+		p2.setBackground(Color.WHITE);
+		JLabel pw = new JLabel("Password");
+
 		JPasswordField jf1 = new JPasswordField(10);
 		JButton input = new JButton("Login");
+		input.setBackground(Color.WHITE);
 
 		input.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if (new String(jf1.getPassword()).equals(password)) {
 					JOptionPane.showMessageDialog(notice, "Login Success!", "Notice", JOptionPane.INFORMATION_MESSAGE);
-
+					p.savepwinfo(false);
 					m.visiblesetting(true);
 					setVisible(false);
 				} else {

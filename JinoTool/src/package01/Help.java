@@ -32,7 +32,8 @@ public class Help extends JFrame {
 				+ "5. Help Button : (This Page) You can get guides.\n" + "6. Settings Button : Set some functions.\n"
 				+ "7. Exit Button : Exit the program.\n"
 				+ "8. Program Info : You can see the information like delveloper of this program.");
-
+		p1.setBackground(Color.WHITE);
+		p2.setBackground(Color.WHITE);
 		jta1.setBackground(Color.WHITE);
 		jta1.setEditable(false);
 		jta2.setEditable(false);
@@ -40,6 +41,10 @@ public class Help extends JFrame {
 		JButton b1 = new JButton("Previous Page");
 		JButton b2 = new JButton("I got it");
 		JButton b3 = new JButton("Next Page");
+		b1.setBackground(Color.WHITE);
+		b2.setBackground(Color.WHITE);
+		b3.setBackground(Color.WHITE);
+
 		b2.addMouseListener(new MouseListener() {
 			public void mouseEntered(MouseEvent e) {
 			}
